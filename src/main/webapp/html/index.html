@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TaxiMonitor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <link rel="icon" type="image/png" href="https://www.df.gov.br/wp-conteudo/themes/templategdf/img/logogdf_1.svg">
+
+</head>
+
+<body>
+    <!-- Menu lateral -->
+    <div class="menu">
+        <main>
+            <img src="https://sso.semob.df.gov.br/controle/static/images/grails_logo_semob.png" style="align-self: center;" alt="Logo da empresa">
+        </main>
+        <br>
+        <a href="#" onclick="exibirMonitoracao()">
+            <i class="fas fa-chart-line"></i>
+            <span>Monitoração</span>
+        </a>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <a href="#">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Sair</span>
+        </a>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+    <div class="conteudo">
+        <div class="conteudo">
+            <div id="conteudoMonitoracao"></div>
+
+        </div>
+
+        <script>
+            function exibirMonitoracao() {
+                ocultarConteudos('conteudoMonitoracao');
+                const conteudo = `
+                    <div id="mapid"></div>
+                    `;
+                document.getElementById('conteudoMonitoracao').innerHTML = conteudo;
+                var map = L.map('mapid').setView([-15.79166991995177, -47.88958339213277], 10);
+
+                // Adicionando um mapa base (OpenStreetMap, por exemplo)
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                // Fazendo a solicitação AJAX para o endpoint
+                $.ajax({
+                    url: 'http://192.168.1.101:8080/servico/prestado',
+                    dataType: 'json',
+                    success: function(data) {
+                        // Manipule os dados recebidos para exibir no mapa
+                        data.forEach(function(item) {
+                            L.marker([item.latitude, item.longitude]).addTo(map);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Erro ao obter os dados:', error);
+                    }
+                });
+            }
+            exibirMonitoracao();
+        </script>
+</body>
+
+</html>
